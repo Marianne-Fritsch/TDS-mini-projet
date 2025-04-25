@@ -108,7 +108,7 @@ class Encoding:
           
 
       # Hashes creation
-      h = {}
+      H=[]
       N_MAX=10
       self.anchors
       peaks_sorted = sorted(peaks, key = lambda x:x[0])[:]
@@ -120,12 +120,10 @@ class Encoding:
             if tj-ti >= self.overlap:
                t_target,f_target = peaks_sorted[i+j]
                delta_t = t_target-t_anchors
-               if t_anchors in h : 
-                  h[t_anchors].append((delta_t,f_anchors,f_target))
-               else : 
-                  h[t_anchors]=[(delta_t,f_anchors,f_target)]
+               h={"t":t_anchors, "hash": np.array([delta_t,f_anchors,f_target])}
                j+=1
-      self.hashes = h
+               H.append(h)
+      self.hashes = H
       self.anchors = peaks_sorted
       
 
