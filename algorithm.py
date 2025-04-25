@@ -110,13 +110,12 @@ class Encoding:
       # Hashes creation
       H=[]
       N_MAX=10
-      self.anchors
       peaks_sorted = sorted(peaks, key = lambda x:x[0])[:]
       for i in range(len(peaks_sorted)) :
          t_anchors,f_anchors = peaks_sorted[i]
          j = 1
-         while j<=10 and i+j < len(peaks) : 
-            ti,tj = peaks_sorted[i][0],peaks_sorted[j][0]
+         while j<=10 and i+j < np.shape(peaks)[0] : 
+            ti,tj = peaks_sorted[i][0],peaks_sorted[i+j][0]
             if tj-ti >= self.overlap:
                t_target,f_target = peaks_sorted[i+j]
                delta_t = t_target-t_anchors
@@ -187,7 +186,7 @@ class Matching:
        time offsets between the matches
     """
 
-    def __init__(self, hashes1, hashes2):
+    def __init__(self, hashes1, hashes2, offsets):
 
         """
         Compare the hashes from two audio files to determine if these
@@ -253,7 +252,11 @@ class Matching:
         """
         Display the offset histogram
         """
-    
+        L = []
+        for i in range(len(self.hashes1)) :
+           offset = self.hashes1[i]["hash"][0] - self.hashes2[i]["hash"][0]
+           L.append(offset)
+        self.offsets = L
         plt.hist(self.offsets, bins=100, density=True)
         plt.xlabel('Offset (s)')
         plt.show()
