@@ -105,21 +105,21 @@ class Encoding:
       self.anchors = anchors
 
       # Hashes creation
-      H=[]
-      N_MAX=10
-      self.anchors
-      peaks_sorted = sorted(peaks, key = lambda x:x[0])[:]
-      for i in range(len(peaks_sorted)) :
-         t_anchors,f_anchors = peaks_sorted[i]
-         j = 1
-         while j<=10 and i+j < len(peaks) : 
-            ti,tj = peaks_sorted[i][0],peaks_sorted[j][0]
-            if tj-ti >= self.overlap:
-               t_target,f_target = peaks_sorted[i+j]
-               delta_t = t_target-t_anchors
-               h={"t":t_anchors, "hash": np.array([delta_t,f_anchors,f_target])}
-               j+=1
-               H.append(h)
+      H = []
+      N_MAX = 10
+      anchors_sorted = sorted(anchors, key=lambda x: x[0])
+
+      for i in range(len(anchors_sorted)):
+         t_anchors, f_anchors = anchors_sorted[i]
+         for j in range(1, N_MAX + 1):
+               if i + j >= len(anchors_sorted):
+                  break
+               t_target, f_target = anchors_sorted[i + j]
+               delta_t = t_target - t_anchors
+               if delta_t >= self.overlap / fs:  # avoid too close
+                  h = {"t": t_anchors, "hash": np.array([delta_t, f_anchors, f_target])}
+                  H.append(h)
+
       self.hashes = H
 
 

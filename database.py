@@ -7,6 +7,7 @@ to the name of the song and to the hashcodes used as signature for
 the matching algorithm.
 """
 
+import pickle
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -51,3 +52,4 @@ if __name__ == "__main__":
     # 4: Save the database
     with open("songs.pickle", "wb") as handle:
         pickle.dump(database, handle, protocol=pickle.HIGHEST_PROTOCOL)
+        

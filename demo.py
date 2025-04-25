@@ -44,6 +44,7 @@ if __name__ == '__main__':
 
     # 5: TODO: Using the class Matching, compare the fingerprint to all the 
     # fingerprints in the database
+    
 
 
 
